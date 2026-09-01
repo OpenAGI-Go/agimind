@@ -39,6 +39,14 @@
 - `books.md` — 书籍
 - `links.md` — 文章、视频、工具
 
+### `deployments/` — 可复现实验脚本
+
+与 `notes/` 中的实践文档配套的部署脚本、benchmark 结果等。**不含模型权重**。
+
+示例：
+
+- `flagos-qwen38-m5/` — FlagOS + Qwen3.8-27B Mac M5 CPU 推理脚本
+
 ## 使用方式
 
 - 有完整想法 → 放进 `thoughts/`
