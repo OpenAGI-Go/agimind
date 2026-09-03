@@ -3,6 +3,7 @@
 > **日期**：2026-09-01  
 > **环境**：Mac M5 Pro / 64GB 统一内存 / macOS arm64  
 > **部署目录**：`~/qwen38-m5`（脚本版本控在 [`deployments/flagos-qwen38-m5/`](../deployments/flagos-qwen38-m5/)）  
+> **截图资源**：[`notes/assets/flagos-qwen38-m5/`](./assets/flagos-qwen38-m5/)  
 > **关联笔记**：[FlagOS 文章摘录](./2026-08-31-flagos-qwen38-m5-cpu.md)
 
 **核心实测结论（一句话）：** DFlash2 + 常驻 Server 下，decode **~23 tok/s**，约为官方 nospec baseline（12.73 tok/s）的 **1.8 倍**；prefill **~73 tok/s**，与官方基本一致。
@@ -236,6 +237,8 @@ MAX_TOKENS=128 ENABLE_THINKING=0 ./infer.sh dflash2 "你的问题"
 | 健康检查 | `GET /health` → 200 OK |
 | 聊天接口 | `POST /v1/chat/completions` → 200 OK（实测 2 次） |
 
+![serve.sh 启动成功，/health 与 /v1/chat/completions 均返回 200](./assets/flagos-qwen38-m5/serve-startup-and-requests.png)
+
 Server 启动后模型常驻内存，后续请求 **无需重新加载 22GB 权重**，这是 benchmark 能测出 ~23 tok/s 的前提。
 
 ### 6.4 HTTP 性能测试（vllm_bench_serve.sh）
@@ -245,6 +248,8 @@ Server 启动后模型常驻内存，后续请求 **无需重新加载 22GB 权�
 **协议：** pp512 / tg128，batch=1，`temperature=0`，`seed=42`，`ignore_eos`  
 **请求数：** 4（连续，无 90s 冷却）  
 **结果文件：** `~/qwen38-m5/vllm-infqps-concurrency1-qwen38-20260901-143723.json`
+
+![./vllm_bench_serve.sh 终端输出：4/4 成功，Mean TPOT 43.8 ms](./assets/flagos-qwen38-m5/vllm-bench-serve-result.png)
 
 #### 汇总指标
 
