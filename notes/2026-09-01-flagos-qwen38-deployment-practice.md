@@ -297,14 +297,56 @@ Server 启动后模型常驻内存，后续请求 **无需重新加载 22GB 权�
 
 > 官方 baseline 是 **nospec + 90s 冷却 + 3 次 median**；本次是 **dflash2 + 连续 4 次**，负载和条件不完全相同，但足以说明 DFlash2 在 decode 阶段有效。
 
-### 6.5 与 FlagOS 文章数据对比
+### 6.5 No-spec HTTP 基准与官方数据对比
 
-| 场景 | 文章/官方 | 本次实测 | 说明 |
-|------|----------|---------|------|
-| nospec decode（PP512/TG128） | 12.73 tok/s | 未单独测 nospec HTTP | 待补测 |
-| dflash2 完整请求（PP85/TG325） | **27.65 tok/s** | — | 需 `./run.sh benchmark-dflash2` |
-| dflash2 decode（HTTP PP512/TG128） | — | **~23 tok/s** | 已测，接近但低于文章 |
-| infer.sh 冷启动短回复 | — | 4.5 → 6.9 tok/s | 含加载，非稳态 |
+**测试时间：** 2026-09-07 21:15、2026-09-08 07:07
+**前置条件：** `./serve.sh nospec` 已运行，模型常驻内存
+**协议：** PP512 / TG128，batch=1，`temperature=0`，`seed=42`，`ignore_eos`
+**每轮请求数：** 4（连续，无 90s 冷却）
+**原始结果：**
+
+- [`2026-09-07 结果`](../deployments/flagos-qwen38-m5/results/vllm-infqps-concurrency1-qwen38-20260907-211649.json)
+- [`2026-09-08 结果`](../deployments/flagos-qwen38-m5/results/vllm-infqps-concurrency1-qwen38-20260908-070915.json)
+
+#### 两次实测
+
+| 指标 | 第 1 次 | 第 2 次 | 官方 Mac17,9 |
+|------|--------:|--------:|---------------:|
+| 成功 / 失败 | 4 / 0 | 4 / 0 | — |
+| Benchmark 总耗时 | 79.45 s | **76.87 s** | — |
+| Median TTFT | 7081.70 ms | **6889.29 ms** | ~6833 ms（按 74.93 tok/s 反推） |
+| Median TPOT | 98.29 ms | **97.04 ms** | 78.55 ms |
+| Prefill（512 / Median TTFT） | 72.30 tok/s | **74.32 tok/s** | **74.93 tok/s** |
+| Decode（1000 / Median TPOT） | 10.17 tok/s | **10.30 tok/s** | **12.73 tok/s** |
+| Output token throughput | 6.44 tok/s | **6.66 tok/s** | — |
+| Total token throughput | 32.22 tok/s | **33.30 tok/s** | **38.07 tok/s** |
+
+第二次相对第一次：
+
+- 总耗时缩短约 **3.2%**；
+- Median TTFT 改善约 **2.7%**；
+- Median TPOT 改善约 **1.3%**；
+- P99 TTFT 从 8247.90 ms 降到 7151.58 ms，尾延迟明显收敛。
+
+#### 关键结论
+
+1. **Prefill 基本复现官方。** 第二次 74.32 tok/s，相对官方 74.93 tok/s 仅低约 **0.8%**，说明 FlagGems + flagtree-cpu 的 Prefill / SMMLA 路径工作正常。
+2. **差距稳定集中在 Decode。** 两次分别为 10.17、10.30 tok/s；最佳值相对官方 12.73 tok/s 低约 **19.1%**。逐 token Decode 的 SDOT 路径对机型 Profile、线程数和内存带宽调度更敏感。
+3. **总吞吐仍低约 12.5%。** 第二次 33.30 tok/s，相对官方 38.07 tok/s 低约 12.5%，主要由 Decode 差距贡献。
+4. 当前机器为 **Mac17,8**，官方 Profile 针对 **Mac17,9**；同时本次 4 个请求连续执行，没有遵循官方“90 秒冷却、3 次取中位数”的流程，因此不能声称严格复现完整官方基准。
+5. benchmark 输出中的 `Output token throughput` 包含每个请求的 Prefill 等待，**不能当作 Decode 速度**；Decode 应由 TPOT 换算。
+
+#### 与 DFlash2 实测的阶段对比
+
+| 路径 | Prefill | Decode | 说明 |
+|------|--------:|-------:|------|
+| No-spec（最佳） | 74.32 tok/s | 10.30 tok/s | Mac17,8，连续 4 请求 |
+| DFlash2 HTTP（2026-09-01） | ~73.1 tok/s | ~22.8 tok/s | 同为 PP512/TG128 |
+| 官方 No-spec | 74.93 tok/s | 12.73 tok/s | Mac17,9 |
+
+在当前测试条件下，DFlash2 的 Decode 速度约为本机 No-spec 的 **2.2 倍**。它没有显著改变 Prefill，而是通过一次验证多个候选 token，摊薄逐 token Decode 的主模型调用成本。
+
+文章中的 DFlash2 完整请求 27.65 tok/s 使用 PP85/TG325，与这里的 PP512/TG128 不同，不能直接横向比较。
 
 ### 6.6 资源占用（观察值）
 
@@ -412,14 +454,15 @@ pkill -9 -f "vllm.entrypoints.cli.main serve"
 
 | 对比项 | 官方/文章 | 本次实测 | 原因 |
 |--------|----------|---------|------|
-| nospec decode | 12.73 tok/s | 未单独测 nospec HTTP | 待 `./serve.sh nospec` + benchmark |
+| nospec prefill | 74.93 tok/s | **74.32 tok/s** | 基本复现（-0.8%） |
+| nospec decode | 12.73 tok/s | **10.30 tok/s** | Mac17,8 使用 Mac17,9 Profile；连续请求无冷却 |
 | dflash2 decode（HTTP） | — | **~23 tok/s** | pp512/tg128，连续 4 次无冷却 |
 | dflash2 完整请求（PP85/TG325） | ~27 tok/s | 未跑 in-process benchmark | 待 `./run.sh benchmark-dflash2` |
 | infer.sh 冷启动 | — | 4.5 → 6.9 tok/s | 含模型加载 + 短输出 |
 
-要补齐对照实验：
-1. `./serve.sh nospec` + `./vllm_bench_serve.sh` → 对比官方 12.73 tok/s
-2. 每次采样前 **sleep 90** → 对齐官方冷却协议
+后续要补齐：
+1. No-spec 每次采样前 **sleep 90**，跑 3 次取中位数，对齐官方冷却协议
+2. 针对 Mac17,8 调整 Decode 的线程数和 Profile，定位约 19% 差距
 3. `./run.sh benchmark-dflash2` → 复现文章 PP85/TG325 的 27.65 tok/s
 
 ---
@@ -436,7 +479,8 @@ pkill -9 -f "vllm.entrypoints.cli.main serve"
 
 ### 可继续探索
 
-- [ ] 用 `./serve.sh nospec` 跑 HTTP benchmark，和官方 12.73 tok/s 做 apples-to-apples 对比
+- [x] 用 `./serve.sh nospec` 跑 PP512/TG128 HTTP benchmark（Prefill 74.32 tok/s，Decode 10.30 tok/s）
+- [ ] 加入 90 秒冷却，按官方流程跑 3 次取中位数
 - [ ] 跑 `./run.sh benchmark-dflash2`，复现文章 PP85/TG325 数字
 - [ ] 接 AnythingLLM 做本地对话 UI
 - [ ] 对比 MLX / llama.cpp 在 Mac 上的 GPU 推理方案

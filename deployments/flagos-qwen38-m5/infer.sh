@@ -24,9 +24,10 @@ shift || true
 source "$PAYLOAD/portable_env.sh"
 ulimit -n 4096
 
-if [[ "$INFERENCE_MODE" == "nospec" ]]; then
-  exec "$PYTHON_BIN" "$PAYLOAD/qwen38_nospec_benchmark.py" "$@"
-elif [[ "$INFERENCE_MODE" == "dflash2" ]]; then
+# Despite its historical filename, this is the interactive generator for both
+# modes. INFERENCE_MODE controls whether speculative_config is left unset
+# (nospec) or configured with the DFlash2 draft model (dflash2).
+if [[ "$INFERENCE_MODE" == "nospec" || "$INFERENCE_MODE" == "dflash2" ]]; then
   exec "$PYTHON_BIN" "$PAYLOAD/qwen38_dflash2_generate.py" "$@"
 else
   echo "Unknown inference mode: $INFERENCE_MODE (use nospec or dflash2)" >&2
