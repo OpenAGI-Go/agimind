@@ -7,6 +7,7 @@
 - [搞懂 NanoJev 并把训练跑通](./搞懂NanoJev并把训练跑通.md) — 主线阶段 0～7
 - [搞懂 NanoJev 的 548 局大评测](./搞懂NanoJev的548局大评测.md) — 下一档结构稿
 - [这次 pip 装进来的包是干什么的](./这次pip装进来的包是干什么的.md)
+- [把自训权重传到 Hugging Face 和 ModelScope](./把自训权重传到HuggingFace和ModelScope.md) — 上传流程与踩坑
 
 ## 其它
 
