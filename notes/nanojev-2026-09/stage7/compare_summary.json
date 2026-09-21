@@ -1,0 +1,14 @@
+{
+  "repro": {
+    "checkpoint": "/root/autodl-tmp/nanojev-study/runs/hard_lr1e5_repro",
+    "decode": 0,
+    "seconds": 0.034114640206098557
+  },
+  "official": {
+    "checkpoint": "/root/autodl-tmp/nanojev-study/ckpts/NanoJev-unified",
+    "decode": 0,
+    "seconds": 0.3044297695159912
+  },
+  "argmax_agreement_on_toy": true,
+  "note": "All 6 toy questions share the same argmax/choice between repro and official; probabilities differ slightly."
+}
