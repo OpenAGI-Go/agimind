@@ -9,6 +9,12 @@
 - [这次 pip 装进来的包是干什么的](./这次pip装进来的包是干什么的.md)
 - [把自训权重传到 Hugging Face 和 ModelScope](./把自训权重传到HuggingFace和ModelScope.md) — 上传流程与踩坑
 
+## 延伸（2026-09-22）
+
+- [开源 Jev 模型梳理：NanoJev、Nimble、Laya](../2026-09-22-open-jev-models-nanojev-nimble-laya.md) — System One 接口、三者对比、模型形态
+- [Mac 上大模型训推开源地图](../2026-09-22-mac-train-infer-landscape.md) — MLX vs MPS、内存选型、本地训推栈
+- [为什么底座都用 Qwen](../../sparks/2026-09-22-为什么底座都用Qwen.md) — 随笔
+
 ## 其它
 
 - `screenshots/` — 各阶段终端 / 页面截图（PNG）
