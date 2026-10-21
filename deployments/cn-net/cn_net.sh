@@ -1,18 +1,18 @@
 #!/usr/bin/env bash
-# 国内云主机（AutoDL 等）一键加速：GitHub / Hugging Face / pip(uv)
+# 云主机开发环境：为当前 shell 配置 PyPI / Hugging Face Hub / git 拉代码的常用 endpoint。
 #
 # 用法（必须 source，export 才进当前 shell）：
-#   source /path/to/cn_net.sh          # 开启
+#   source /path/to/cn_net.sh          # 启用
 #   source /path/to/cn_net.sh on
-#   source /path/to/cn_net.sh off      # 关闭
+#   source /path/to/cn_net.sh off      # 恢复默认（推送 HF 前先 off）
 #   source /path/to/cn_net.sh status
-#   source /path/to/cn_net.sh probe    # 测各镜像是否通
+#   source /path/to/cn_net.sh probe    # 探测各索引是否可达
 #
-# 经验（本仓 AutoDL 踩过的坑）：
-# - 清华 PyPI 在部分 AutoDL 区会 HTTP 403 → 默认优先中科大
-# - HF 下载用 hf-mirror.com；上传权重请 cn_net off 或 unset HF_ENDPOINT
-# - hf_xet 可能绕过镜像直连官方 → 默认关掉
-# - AutoDL: source /etc/network_turbo 只加速 github/hf，且部分地区不可用
+# 备注：
+# - 部分机房访问 tuna PyPI 会 403 → 默认优先 USTC
+# - 下载可用 HF_ENDPOINT；上传官方 Hub 前请 cn_net off 或 unset HF_ENDPOINT
+# - hf_xet 可能忽略 HF_ENDPOINT → 默认 HF_HUB_DISABLE_XET=1
+# - 若机器提供 /etc/network_turbo，会在 on 时尝试 source（以厂商文档为准）
 
 _CN_NET_CMD="${1:-on}"
 
@@ -23,8 +23,8 @@ _cn_net_is_sourced() {
 
 _cn_net_say() { printf '[cn-net] %s\n' "$*"; }
 
-# ---------- 候选镜像（按优先序）----------
-# PyPI：中科大 > 阿里云 > 豆瓣；清华作 probe 备用（部分机房 403）
+# ---------- 候选索引（按优先序）----------
+# PyPI：USTC > 阿里云 > 豆瓣；tuna 作 probe 备用（部分机房 403）
 _CN_PIP_CANDIDATES=(
   "https://mirrors.ustc.edu.cn/pypi/simple"
   "https://mirrors.aliyun.com/pypi/simple"
@@ -32,7 +32,7 @@ _CN_PIP_CANDIDATES=(
   "https://pypi.tuna.tsinghua.edu.cn/simple"
 )
 _CN_HF_MIRROR="https://hf-mirror.com"
-# git clone 包装用的 GitHub 前缀（不稳定，失败会回退直连 / turbo）
+# git clone 备用入口（不稳定；失败则回退直连或厂商 turbo）
 _CN_GH_PREFIXES=(
   "https://ghfast.top/https://github.com/"
   "https://mirror.ghproxy.com/https://github.com/"
@@ -62,10 +62,10 @@ _cn_net_try_autodl_turbo() {
     # shellcheck disable=SC1091
     source /etc/network_turbo
     if [[ -n "${http_proxy:-}${https_proxy:-}${HTTP_PROXY:-}${HTTPS_PROXY:-}" ]]; then
-      _cn_net_say "已 source /etc/network_turbo（GitHub/HF 学术加速）"
+      _cn_net_say "已 source /etc/network_turbo（沿用云主机厂商提供的环境）"
       return 0
     fi
-    _cn_net_say "/etc/network_turbo 存在但未设置 proxy（该地区可能不支持）"
+    _cn_net_say "/etc/network_turbo 存在但未设置 proxy（当前实例可能未启用）"
   fi
   return 1
 }
@@ -79,7 +79,7 @@ cn_net_off() {
   if git config --global --get-regexp '^url\..*\.insteadof$' >/dev/null 2>&1; then
     git config --global --unset-all "url.https://ghfast.top/https://github.com/.insteadOf" 2>/dev/null || true
   fi
-  _cn_net_say "已关闭代理 / HF 镜像 / pip 索引环境变量"
+  _cn_net_say "已清除 proxy / HF_ENDPOINT / pip 索引相关环境变量"
 }
 
 cn_net_on() {
@@ -103,8 +103,8 @@ cn_net_on() {
   export UV_INDEX_URL="$pip_idx"
   _cn_net_say "PIP_INDEX_URL=$PIP_INDEX_URL"
 
-  # git：不强制改 global insteadOf（镜像域名常挂）；提供函数 cn_git_clone
-  _cn_net_say "GitHub: 用 cn_git_clone <github-url> [dir]；或先依赖 network_turbo"
+  # git：不强制改 global insteadOf；需要时用 cn_git_clone
+  _cn_net_say "GitHub: 用 cn_git_clone <github-url> [dir]；或先配置厂商提供的 network_turbo"
   _cn_net_say "就绪。验证: cn_net_status"
 }
 
@@ -125,7 +125,7 @@ cn_net_probe() {
       _cn_net_say "FAIL $u"
     fi
   done
-  _cn_net_say "探测 HF 镜像…"
+  _cn_net_say "探测 HF endpoint…"
   if _cn_net_http_ok "$_CN_HF_MIRROR"; then
     _cn_net_say "OK  $_CN_HF_MIRROR"
   else
@@ -133,13 +133,13 @@ cn_net_probe() {
   fi
   _cn_net_say "探测 github.com…"
   if _cn_net_http_ok "https://github.com"; then
-    _cn_net_say "OK  https://github.com（直连或已有 proxy）"
+    _cn_net_say "OK  https://github.com"
   else
-    _cn_net_say "FAIL https://github.com → 试 source /etc/network_turbo 或 cn_git_clone"
+    _cn_net_say "FAIL https://github.com → 可试 /etc/network_turbo 或 cn_git_clone"
   fi
 }
 
-# clone GitHub：优先直连，再 turbo，再公共前缀镜像
+# clone GitHub：优先直连，再厂商 turbo，再备用入口
 cn_git_clone() {
   local url="$1"
   local dest="${2:-}"
@@ -168,7 +168,7 @@ cn_git_clone() {
     git clone --depth 1 "$url" && return 0
   fi
 
-  _cn_net_say "直连失败，试 AutoDL turbo…"
+  _cn_net_say "直连失败，试 /etc/network_turbo…"
   _cn_net_try_autodl_turbo || true
   if [[ -n "$dest" ]]; then
     git clone --depth 1 "$url" "$dest" && return 0
@@ -179,7 +179,7 @@ cn_git_clone() {
   local p
   for p in "${_CN_GH_PREFIXES[@]}"; do
     mirror_url="${p}${path}"
-    _cn_net_say "试镜像: $mirror_url"
+    _cn_net_say "试备用入口: $mirror_url"
     if [[ -n "$dest" ]]; then
       git clone --depth 1 "$mirror_url" "$dest" && return 0
     else

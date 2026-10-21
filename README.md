@@ -27,7 +27,7 @@
 | [FlagOS + Qwen3.8-27B 部署实践](./notes/2026-09-01-flagos-qwen38-deployment-practice.md) | Mac M5 Pro，FlagOS CPU Runtime，W4A8，OpenAI 兼容服务与压测 |
 | [FlagOS Qwen3.8 M5 CPU 摘录](./notes/2026-08-31-flagos-qwen38-m5-cpu.md) | 相关文章摘录与注释 |
 | [部署脚本：flagos-qwen38-m5](./deployments/flagos-qwen38-m5/) | 与上面实践配套的脚本 |
-| [cn-net 国内加速](./deployments/cn-net/) | AutoDL 等：GitHub / HF / pip 一键镜像 |
+| [cn-net 包源配置](./deployments/cn-net/) | 云主机上设置 pip / HF Hub endpoint 的小脚本 |
 
 ### 预训练
 
@@ -48,7 +48,7 @@ Qwen 骨干 + 决策头，专家动作上的交叉熵 SFT，以及复现与评�
 | [搞懂 NanoJev 并把训练跑通](./notes/nanojev-2026-09/搞懂NanoJev并把训练跑通.md) | 主线阶段 0～7（数据、官方权重、smoke、600 步 repro、serve 对比） |
 | [搞懂 NanoJev 的 548 局大评测](./notes/nanojev-2026-09/搞懂NanoJev的548局大评测.md) | 下一档闭环评测结构稿 |
 | [这次 pip 装进来的包是干什么的](./notes/nanojev-2026-09/这次pip装进来的包是干什么的.md) | 环境依赖说明 |
-| [把自训权重传到 Hugging Face 和 ModelScope](./notes/nanojev-2026-09/把自训权重传到HuggingFace和ModelScope.md) | 上传流程与 AutoDL 镜像踩坑 |
+| [把自训权重传到 Hugging Face 和 ModelScope](./notes/nanojev-2026-09/把自训权重传到HuggingFace和ModelScope.md) | 上传流程与云主机 endpoint 配置注意点 |
 | [NanoJev 笔记目录](./notes/nanojev-2026-09/README.md) | 截图、runs-meta、stage7 对照 |
 
 公开权重（不在本仓）：
