@@ -67,7 +67,7 @@
   → EDK2 / UEFI（Boot Services：枚举、加载、启动菜单）
   → ExitBootServices()
   → OS Loader（GRUB 等） / 内核
-  → 运行中仍可调用 UEFI Runtime Services（少量接口）
+  → OS 已接手之后，仍可通过少量 UEFI Runtime Services 调固件（如变量、ResetSystem）
 ```
 
 说明：
@@ -82,7 +82,7 @@
 
 | | Boot Services | Runtime Services |
 |--|---------------|------------------|
-| 何时有效 | `ExitBootServices()` **之前** | **之后**仍可用 |
+| 何时有效 | `ExitBootServices()` **之前**（启动阶段） | **之后**，即 **OS 已运行期间** 仍可调用 |
 | 典型能力 | 分配内存、枚举设备、加载镜像 | Get/SetTime、变量、ResetSystem、Capsule 更新等 |
 | 类比 | 装修队还在工地 | 交房后留下的物业电话 |
 
