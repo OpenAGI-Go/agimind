@@ -1,6 +1,6 @@
 # agimind · 仓库目录说明
 
-> 原根目录 README。文章索引见 [README.md](./README.md)。
+> 工作区五方向见 [根目录 README](../README.md)。文章索引见 [README.md](./README.md)。
 
 用来整理自己学习 AGI 思路的个人项目。记录思路、灵感，以及平时收集的有价值信息。
 
