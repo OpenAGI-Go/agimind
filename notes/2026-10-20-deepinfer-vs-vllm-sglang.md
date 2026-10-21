@@ -2,8 +2,8 @@
 
 > **日期**：2026-10-20  
 > **来源**：DeepSeek 公众号公告 · [微信](https://mp.weixin.qq.com/s/5MEu2eeqNfBWXlkCKTd6sg) · [DeepInfer README](https://github.com/deepseek-ai/DeepInfer)  
-> **本地**：[`infra/infer/DeepInfer/`](../../infra/infer/DeepInfer/) · [`infra/infer/deepseek-recipe/`](../../infra/infer/deepseek-recipe/)  
-> **性质**：定位备忘，不是性能对照。
+> **上游**： [DeepInfer](https://github.com/deepseek-ai/DeepInfer) · [deepseek-recipe](https://github.com/deepseek-ai/deepseek-recipe)  
+> **性质**：定位备忘，不是性能对照。本地若有浅克隆，在工作区推理 infra 目录，不在本 Git 仓库。
 
 ---
 
@@ -56,11 +56,11 @@
 - **要通用多模型、多厂家后端、社区插件（含 RISC-V RVV）** → 仍看 vLLM / SGLang  
 - DeepInfer **不是**「又一个通用引擎替代品」；README 自己承认从 vLLM 长出来，且完整 serving 还缺几块
 
-对应本工作区：
+对应本工作区（均在本仓之外的本地目录）：
 
-- 框架本体 → [`infra/infer/`](../../infra/infer/)  
-- Ascend / NVIDIA Runtime 竖切 → [`infra/chips/`](../../infra/chips/)  
-- RISC-V 上的 vLLM / SGLang → [`riscv/`](../../riscv/)，不复制进 DeepInfer
+- 框架本体 → 推理 infra  
+- Ascend / NVIDIA Runtime 竖切 → 芯片栈  
+- RISC-V 上的 vLLM / SGLang → RISC-V 专区（不复制进 DeepInfer）
 
 ---
 
@@ -80,6 +80,5 @@ Open Source Week 时他们写过：内部引擎是老版 vLLM fork，耦合集�
 
 ## 关联
 
-- 推理 infra 入口：[`infra/infer/README.md`](../../infra/infer/README.md)  
 - KV / 落盘：[LMCache × Phoenix](./2026-09-03-lmcache-phoenix-xpuiio.md)  
-- 芯片竖切：[`infra/chips/README.md`](../../infra/chips/README.md)  
+- RISC-V 推理跟进：[V、vLLM、SGLang 跟进](./2026-09-27-riscv-v-vllm-sglang.md)  

@@ -2,16 +2,19 @@
 
 自己学 AGI / AI 系统时写的笔记与可复现脚本。权重不进仓库；脚本在 `deployments/`，文章在 `notes/`（思路在 `thoughts/`）。
 
-工作区五方向和代码位置见 [根目录 README](../README.md)。仓库内部怎么分区，见 [README.structure.md](./README.structure.md)。
+仓库内部怎么分区，见 [README.structure.md](./README.structure.md)。  
+实验代码、芯片栈、RISC-V 专区、小鸭子等在本地 AGI 工作区的其他目录，**不在本 Git 仓库里**；GitHub 上请只看本仓的 `notes/` / `thoughts/` / `deployments/`。
 
-| 代码 | 现路径 |
+相关主题（便于对照笔记，无外链）：
+
+| 主题 | 说明 |
 |---|---|
-| NanoJev | [`../models/NanoJev/`](../models/NanoJev/) |
-| 训练 infra | [`../infra/train/`](../infra/train/) |
-| 推理 infra | [`../infra/infer/`](../infra/infer/)（DeepInfer / Phoenix 等） |
-| 芯片栈 | [`../infra/chips/`](../infra/chips/) |
-| RISC-V 专区 | [`../riscv/`](../riscv/) |
-| 小鸭子 | [`../robot/`](../robot/) |
+| NanoJev | 决策模型 / 游戏 Agent 训练与评测 |
+| 训练 infra | 预训练与训练流水线 |
+| 推理 infra | DeepInfer / Phoenix 等推理栈 |
+| 芯片栈 | Driver / Runtime 竖切 |
+| RISC-V | 向量扩展、推理框架跟进、固件与 BRS 等 |
+| 小鸭子 | Microduck 复刻进度（本仓只收摘录） |
 
 ---
 
@@ -84,15 +87,15 @@ Qwen 骨干 + 决策头，专家动作上的交叉熵 SFT，以及复现与评�
 
 ### 小鸭子 · Microduck 复刻
 
-代码与总文档在 [`../robot/`](../robot/)。agimind 只收进度摘录与指针。
+总文档在本地工作区的 robot 专区；本仓只收进度摘录与指针。
 
 | 文章 | 说明 |
 |------|------|
 | [复刻笔记目录](./notes/microduck-2026-10/README.md) | 索引 |
 | [已完成复刻摘要](./notes/microduck-2026-10/已完成复刻摘要.md) | 装机 / 上板 / 首走 / 手柄（2026-10） |
-| [真机软件栈（指针）](./notes/2026-09-11-microduck-project-analysis.md) | → `robot/microduck.md` §四 |
-| [训练仓（指针）](./notes/2026-09-12-microduck-rl.md) | → `robot/microduck.md` §五 |
-| [复刻路线（指针）](./notes/2026-09-13-microduck-routes.md) | → `robot/microduck.md` §六 |
+| [真机软件栈（指针）](./notes/2026-09-11-microduck-project-analysis.md) | 指向 robot 总文档 §四 |
+| [训练仓（指针）](./notes/2026-09-12-microduck-rl.md) | 指向 robot 总文档 §五 |
+| [复刻路线（指针）](./notes/2026-09-13-microduck-routes.md) | 指向 robot 总文档 §六 |
 
 ### 其它
 

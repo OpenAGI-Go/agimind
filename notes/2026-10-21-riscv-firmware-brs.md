@@ -2,7 +2,7 @@
 
 > 目的：系统记录对 RISC-V 服务器固件、BRS、Server Platform 及相关 Arm 对照经验的理解。  
 > 状态：持续更新。从零基础到能规划「RVA23 服务器引导生态」为止。  
-> 规范仓库（本地）：`/Users/max/workdir/AGI/riscv/agent-cpu/riscv-brs/`（fork: maxonxie/riscv-brs；upstream: riscv-non-isa/riscv-brs）  
+> 规范仓库：[riscv-non-isa/riscv-brs](https://github.com/riscv-non-isa/riscv-brs) · fork：[maxonxie/riscv-brs](https://github.com/maxonxie/riscv-brs)  
 > 正式文档站点：https://docs.riscv.org/reference/brs/v1.0/
 
 ---
@@ -109,7 +109,7 @@ Linux 侧能碰到的例子：`efibootmgr` / EFI 变量、部分 reboot 路径�
 
 - 全称：RISC-V Boot and Runtime Services Specification  
 - 版本：v1.0 于 **2025-08-29** ratified（BoD 批准）  
-- 仓库：`riscv-non-isa/riscv-brs`；本地：`/Users/max/workdir/AGI/riscv/agent-cpu/riscv-brs/`  
+- 仓库：https://github.com/riscv-non-isa/riscv-brs  
 - 当前 `main` 在攒 **v1.1**（已从 Server Platform 回灌部分规则）  
 - 性质：**固件↔OS 契约**，不是微架构规范，也不是可运行代码仓（AsciiDoc 出 PDF/HTML）
 
@@ -180,7 +180,7 @@ BRS-I 的「成功启动」定义（规范类比）：像 2000 年代初 x86 主
 仓库内 `brs_tests.adoc`：按规则号写测试算法。Hart/SBI 有步骤；**UEFI 大量仍是 FIXME**。  
 有 ACS 的意图，成熟度远低于正文。这是相对 Arm ServerReady 最大的缺口之一。
 
-### 3.7 仓库关键节点（本地 `riscv/agent-cpu/riscv-brs`）
+### 3.7 仓库关键节点
 
 | 提交/标签 | 意义 |
 |-----------|------|
@@ -267,7 +267,7 @@ Agent / 推理 runtime **不进入**引导生态的完成定义；完成标志�
 |------|-------------|
 | BRS 站点 | https://docs.riscv.org/reference/brs/v1.0/ |
 | BRS GitHub | https://github.com/riscv-non-isa/riscv-brs |
-| 本地克隆 | `/Users/max/workdir/AGI/riscv/agent-cpu/riscv-brs/` |
+| 个人 fork | https://github.com/maxonxie/riscv-brs |
 | Server Platform PDF | https://docs.riscv.org/reference/server-platform/ |
 | RVA23 | https://docs.riscv.org/reference/rva23/ |
 | OpenSBI | https://github.com/riscv-software-src/opensbi |
@@ -344,4 +344,5 @@ Agent / 推理 runtime **不进入**引导生态的完成定义；完成标志�
 | 日期 | 变更 |
 |------|------|
 | 2026-10-21 | 初稿：总图、启动链、BRS/BRS-I、Server Platform、Arm 对照、名词表、参考链接 |
-| 2026-10-21 | 迁入 agimind/notes，规范仓路径改为 agent-cpu 下的本地克隆 |
+| 2026-10-21 | 迁入 agimind/notes |
+| 2026-10-21 | 去掉出仓相对路径 / 本机绝对路径，改为 GitHub 与主题描述 |

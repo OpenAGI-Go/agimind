@@ -86,6 +86,5 @@
 ## 关联
 
 - 长文：[RISC-V 向量与矩阵扩展](./2026-09-08-riscv-vector-matrix-edge-ai.md)
-- 支持度报告：`../../riscv/riscv-inference/RISCV-SUPPORT-REPORT.md`
-- 贡献队列：`../../riscv/riscv-inference/riscv-maintainer/upstream-work-queue.md`
-- 专区索引：`../../riscv/README.md`
+- 固件 / BRS：[RISC-V 固件与 BRS 理解笔记](./2026-10-21-riscv-firmware-brs.md)
+- 支持度报告、贡献队列等在本地 RISC-V 专区（不在本 Git 仓库）

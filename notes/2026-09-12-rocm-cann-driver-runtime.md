@@ -2,7 +2,7 @@
 
 日期：2026-09-12  
 承接：[`2026-09-08-tecorigin-ai-accelerator-system-software-plan.md`](../thoughts/2026-09-08-tecorigin-ai-accelerator-system-software-plan.md)  
-代码树：[`AI-Chip-Driver-Runtime/`](../../infra/chips/AI-Chip-Driver-Runtime/)
+代码树：本地工作区芯片栈下的 `AI-Chip-Driver-Runtime/`（不在本 Git 仓库）
 
 先前会话把太初栈映射成「SDAADriver ≈ 设备驱动层、SDAARuntime ≈ CUDA/HIP Runtime」。本笔记用 **AMD ROCm** 与 **华为 CANN** 两套已开源的 Driver/Runtime，把那张概念图钉到真实模块与提交流程上。
 
