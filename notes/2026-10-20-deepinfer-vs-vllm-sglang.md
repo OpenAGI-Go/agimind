@@ -81,4 +81,4 @@ Open Source Week 时他们写过：内部引擎是老版 vLLM fork，耦合集�
 ## 关联
 
 - KV / 落盘：[LMCache × Phoenix](./2026-09-03-lmcache-phoenix-xpuiio.md)  
-- RISC-V 推理跟进：[V、vLLM、SGLang 跟进](./2026-09-27-riscv-v-vllm-sglang.md)  
+- RISC-V 推理跟进：[vLLM / SGLang](../riscv/vllm-sglang.md)  

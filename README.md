@@ -13,7 +13,7 @@
 | 训练 infra | 预训练与训练流水线 |
 | 推理 infra | DeepInfer / Phoenix 等推理栈 |
 | 芯片栈 | Driver / Runtime 竖切 |
-| RISC-V | 向量扩展、推理框架跟进、固件与 BRS 等 |
+| RISC-V | 见本仓 [`riscv/`](./riscv/)（开源跟进） |
 | 小鸭子 | Microduck 复刻进度（本仓只收摘录） |
 
 ---
@@ -68,14 +68,18 @@ Qwen 骨干 + 决策头，专家动作上的交叉熵 SFT，以及复现与评�
 | [LMCache × Phoenix](./notes/2026-09-03-lmcache-phoenix-xpuiio.md) | KV 打到 SSD 后瓶颈在主机内存跳板（摘录 + 笔记） |
 | [LMCache #5344 cross-TP](./notes/2026-10-12-lmcache-5344-cross-tp.md) | torn store：复现与贡献过程（进行中） |
 
-### RISC-V 向量与推理栈
+### RISC-V · 开源组织与项目
 
-从 RVV / 矩阵扩展的判断，落到现在能跟的 vLLM、SGLang。
+独立目录 [`riscv/`](./riscv/)：只跟开源规范、组织与上游项目，**不含公司产品**。
 
-| 文章 | 说明 |
+| 入口 | 说明 |
 |------|------|
-| [RISC-V 向量与矩阵扩展](./notes/2026-09-08-riscv-vector-matrix-edge-ai.md) | 2026-09-08：V → Zvbdot → IME/VME/AME，SiFive XM 等产业对照 |
-| [V、vLLM、SGLang 跟进](./notes/2026-09-27-riscv-v-vllm-sglang.md) | 2026-09-27：ISA 有没有翻面，加上两家框架的主干 / PR |
+| [riscv/README.md](./riscv/README.md) | 边界说明与目录 |
+| [组织跟进](./riscv/orgs.md) | RVI、BRS TG、TianoCore、openRuyi 等 |
+| [项目清单](./riscv/projects.md) | BRS、OpenSBI、EDK2、vLLM/SGLang 等 |
+| [固件与 BRS](./riscv/firmware-brs.md) | BRS-I / Server Platform 理解笔记 |
+| [向量与矩阵扩展](./riscv/vector-matrix-edge-ai.md) | V → Zvbdot → IME/VME/AME |
+| [vLLM / SGLang](./riscv/vllm-sglang.md) | 上游 RISC-V 进展跟进 |
 
 ### 端侧 AI 系统
 

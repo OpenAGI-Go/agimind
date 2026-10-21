@@ -41,6 +41,12 @@
 - `books.md` — 书籍
 - `links.md` — 文章、视频、工具
 
+### `riscv/` — RISC-V 开源组织与项目
+
+长期跟进开源规范、组织与上游仓库。索引见 [`riscv/README.md`](./riscv/README.md)。
+
+**禁止**放入公司产品、商业路线、面试/JD、NDA 材料。
+
 ### `deployments/` — 可复现实验脚本
 
 与 `notes/` 中的实践文档配套的部署脚本、benchmark 结果等。**不含模型权重**。
