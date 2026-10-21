@@ -3,7 +3,7 @@
 > **日期**：2026-09-27  
 > **背景**：接着 [向量与矩阵扩展](./vector-matrix-edge-ai.md) 往下看。那篇把 **V / RVV → Zvbdot → IME / VME / AME** 和公开 IP 叙事讲清楚了，但推理框架只写到 IREE / Triton，没有落到现在在跟的 **vLLM、SGLang 上游**。  
 > **性质**：状态复核，不是重写长文。ISA 判断纪律仍用长文 §8：计划日期 ≠ 已 ratified。  
-> **目录**：[`agimind/riscv/`](./README.md)（只跟开源上游；不含公司产品）。
+> **目录**：[`agimind/riscv/`](./README.md)
 
 ---
 

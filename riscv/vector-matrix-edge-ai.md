@@ -4,7 +4,7 @@
 > **视角**：端侧 LLM / VLM / VLA 部署、编译器、Runtime、Linux 与异构芯片适配  
 > **结论先行**：RISC-V AI 加速不是“加一条矩阵乘指令”这么简单，而是负载、数据类型、寄存器状态、数据移动、编译器、算子库和 OS 共同决定的系统问题。  
 > **后续**：V / vLLM / SGLang 的 09-27 复核见 [vllm-sglang.md](./vllm-sglang.md)。本文 §8 的截止日期不变，不把后来的计划节点回写成当时事实。  
-> **目录**：本文件在 [`agimind/riscv/`](./README.md)（开源组织与项目跟进；不含公司产品）。
+> **目录**：[`agimind/riscv/`](./README.md)
 
 ## 摘要
 

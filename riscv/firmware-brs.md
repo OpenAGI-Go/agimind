@@ -1,8 +1,8 @@
 # RISC-V 固件与 BRS 理解笔记
 
-> 目的：系统记录对 RISC-V **开源**固件规范（BRS、Server Platform）及相关公开对照的理解。  
+> 目的：系统记录对 RISC-V 固件规范（BRS、Server Platform）及相关公开对照的理解。  
 > 状态：持续更新。  
-> 目录：[`agimind/riscv/`](./README.md)（开源组织与项目；**不含公司产品**）。  
+> 目录：[`agimind/riscv/`](./README.md)  
 > 规范仓库：[riscv-non-isa/riscv-brs](https://github.com/riscv-non-isa/riscv-brs) · fork：[maxonxie/riscv-brs](https://github.com/maxonxie/riscv-brs)  
 > 正式文档站点：https://docs.riscv.org/reference/brs/v1.0/
 
@@ -241,7 +241,7 @@ RISC-V 目前强在前半段规范，弱在 ACS/证书与统一参考平台。
 
 ---
 
-## 6. 开源侧可跟的工程方向（非公司产品）
+## 6. 开源侧可跟的工程方向
 
 面向社区参考实现与合规能力时，优先级可以是：
 
@@ -252,8 +252,7 @@ RISC-V 目前强在前半段规范，弱在 ACS/证书与统一参考平台。
 5. 公开刷写/恢复流程（可参考 Ruyi Firmware 的工程方法）  
 6. 安全能力按规范公开项推进（Secure Boot、签名更新、RoT 等）  
 
-完成标志（开源生态视角）：未改过的通用 OS 镜像，能在声明符合 BRS-I / Server Platform 的公开平台上启动。  
-**公司产品路线、客户 PoC、内部认证商务不在本目录记录。**
+完成标志（开源生态视角）：未改过的通用 OS 镜像，能在声明符合 BRS-I / Server Platform 的公开平台上启动。
 
 ---
 
@@ -340,4 +339,4 @@ RISC-V 目前强在前半段规范，弱在 ACS/证书与统一参考平台。
 | 2026-10-21 | 初稿：总图、启动链、BRS/BRS-I、Server Platform、Arm 对照、名词表、参考链接 |
 | 2026-10-21 | 迁入 agimind/notes |
 | 2026-10-21 | 去掉出仓相对路径 / 本机绝对路径，改为 GitHub 与主题描述 |
-| 2026-10-21 | 迁入 `agimind/riscv/`；收紧为开源跟进，去掉公司产品向表述 |
+| 2026-10-21 | 迁入 `agimind/riscv/` |

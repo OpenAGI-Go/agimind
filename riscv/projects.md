@@ -1,6 +1,6 @@
 # 开源项目与规范仓库
 
-> 跟踪**上游仓库**与公开文档状态。个人 fork 可在「备注」一笔带过，不以公司产品为目标。
+> 跟踪上游仓库与公开文档状态。个人 fork 可在备注一笔带过。
 
 ## 规范（ratified / 进行中）
 
@@ -37,7 +37,7 @@
 
 | Fork | 上游 | 用途 |
 |------|------|------|
-| [maxonxie/riscv-brs](https://github.com/maxonxie/riscv-brs) | riscv-non-isa/riscv-brs | 读规范、提 issue/PR；非产品仓 |
+| [maxonxie/riscv-brs](https://github.com/maxonxie/riscv-brs) | riscv-non-isa/riscv-brs | 读规范、提 issue/PR |
 
 ## 状态栏（随手改）
 

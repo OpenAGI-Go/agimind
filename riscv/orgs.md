@@ -1,6 +1,6 @@
 # 开源 / 标准组织跟进
 
-> 只记组织角色、公开产出与跟进入口。不写会员商务或某家公司产品。
+> 记组织角色、公开产出与跟进入口。
 
 | 组织 | 角色 | 跟进入口 | 备注 |
 |------|------|----------|------|
@@ -11,7 +11,7 @@
 | [UEFI Forum](https://uefi.org/) | UEFI / ACPI 规范与 SCT | [Specifications](https://uefi.org/specifications) | Arm 侧有 SystemReady；RISC-V 用 BRS + RSCV ACPI ID |
 | OpenSBI 维护社区 | SBI 参考实现 | [opensbi](https://github.com/riscv-software-src/opensbi) | M-mode / 更高特权侧常见实现 |
 | [openRuyi Project](https://github.com/openRuyi-Project) | 开源 RISC-V 系统 / 固件相关 | [openRuyi](https://github.com/openRuyi-Project/openRuyi) · [ruyifirmware](https://github.com/openRuyi-Project/ruyifirmware) · [文档](https://openruyi.cn) | 社区固件工程参考；≠ 服务器合规基线本身 |
-| OERV（中科院软件所相关公开团队） | 开源 RISC-V 生态工程 | 经 openRuyi / 公开推文跟进 | 只记公开项目，不记商务 |
+| OERV（中科院软件所相关公开团队） | 开源 RISC-V 生态工程 | 经 openRuyi / 公开推文跟进 | 只记公开项目 |
 
 ## 对照用（非 RISC-V 主线，仅作公开标准参照）
 
@@ -20,7 +20,7 @@
 | Arm SystemReady / 原 ServerReady | BRS-I / 认证缺口的对照对象 | [SystemReady](https://developer.arm.com/Architectures/Arm%20SystemReady) · [ACS](https://github.com/ARM-software/arm-systemready) |
 | Trusted Firmware | Arm TF-A 与启动信任链对照 | [trustedfirmware.org](https://www.trustedfirmware.org/) |
 
-全球计算联盟（GCC）等**产业联盟**的团体标准（如 T/GCC 3006）若引用，只作「公开标准文本」摘录，不在此目录展开会员或产品叙事。详见固件笔记中的链接索引即可。
+团体标准文本（如 T/GCC 3006）若引用，只作公开标准摘录。详见 [firmware-brs.md](./firmware-brs.md) 链接索引。
 
 ## 待补
 

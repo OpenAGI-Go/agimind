@@ -70,11 +70,11 @@ Qwen 骨干 + 决策头，专家动作上的交叉熵 SFT，以及复现与评�
 
 ### RISC-V · 开源组织与项目
 
-独立目录 [`riscv/`](./riscv/)：只跟开源规范、组织与上游项目，**不含公司产品**。
+独立目录 [`riscv/`](./riscv/)，跟进开源规范、组织与上游项目。
 
 | 入口 | 说明 |
 |------|------|
-| [riscv/README.md](./riscv/README.md) | 边界说明与目录 |
+| [riscv/README.md](./riscv/README.md) | 目录索引 |
 | [组织跟进](./riscv/orgs.md) | RVI、BRS TG、TianoCore、openRuyi 等 |
 | [项目清单](./riscv/projects.md) | BRS、OpenSBI、EDK2、vLLM/SGLang 等 |
 | [固件与 BRS](./riscv/firmware-brs.md) | BRS-I / Server Platform 理解笔记 |
